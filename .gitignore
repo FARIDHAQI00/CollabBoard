@@ -21,6 +21,7 @@ lerna-debug.log*
 # Project files / user uploads/downloads
 downloads/
 uploads/
+docs/
 
 # OS metadata
 .DS_Store
