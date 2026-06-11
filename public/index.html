@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>SecureChat — E2E Encrypted Multi-User Chat</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🔐</text></svg>" />
+</head>
+<body>
+  <!-- Login screen -->
+  <div id="login" class="login-wrap">
+    <div class="login-card">
+      <div class="brand">
+        <span class="logo">🔐</span>
+        <h1>SecureChat</h1>
+        <p class="tagline">End-to-End Encrypted Multi-User Chat</p>
+      </div>
+      <label>Username</label>
+      <input id="login-name" type="text" placeholder="e.g. alice" maxlength="24" autocomplete="off" />
+      <button id="login-go">Masuk →</button>
+      <p class="hint">Pesan dienkripsi dengan AES-256-GCM di browser Anda. Server tidak dapat membaca plaintext.</p>
+    </div>
+  </div>
+
+  <!-- Main app -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="me">
+        <span class="me-avatar" id="me-avatar">A</span>
+        <div class="me-info">
+          <div class="me-name" id="me-name">—</div>
+          <div class="me-status">● online</div>
+        </div>
+        <button class="icon-btn" id="theme-toggle" title="Toggle theme">🌓</button>
+      </div>
+
+      <div class="side-tabs">
+        <button data-tab="rooms" class="tab-btn active">Rooms</button>
+        <button data-tab="users" class="tab-btn">Users</button>
+      </div>
+
+      <div class="tab-panel" data-panel="rooms">
+        <div class="panel-head">
+          <h3>Rooms</h3>
+          <button id="room-create" class="ghost-btn" title="Create room">+</button>
+        </div>
+        <ul id="room-list" class="chat-list"></ul>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="users">
+        <div class="panel-head">
+          <h3>Users</h3>
+        </div>
+        <ul id="user-list" class="chat-list"></ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="chat-head">
+        <div class="chat-head-title">
+          <span id="chat-icon">#</span>
+          <span id="chat-title">general</span>
+          <span id="chat-sub" class="muted"></span>
+        </div>
+        <div class="chat-head-tools">
+          <label class="ttl-pick">
+            TTL
+            <select id="ttl-pick">
+              <option value="0">none</option>
+              <option value="5">5s</option>
+              <option value="10">10s</option>
+              <option value="30">30s</option>
+              <option value="60">1m</option>
+            </select>
+          </label>
+          <button id="board-toggle" class="icon-btn" title="Toggle whiteboard">🎨</button>
+        </div>
+      </header>
+
+      <section id="messages" class="messages" aria-live="polite"></section>
+
+      <div id="board-wrap" class="board-wrap">
+        <div class="board-tools">
+          <button id="board-pen" class="tool-btn" title="Pen">✏️</button>
+          <input id="board-color" type="color" value="#ffffff" title="Color" />
+          <input id="board-size" type="range" min="1" max="20" value="3" />
+          <span id="board-size-val" class="muted">3px</span>
+          <button id="board-clear" class="ghost-btn" title="Clear">🗑 Clear</button>
+        </div>
+        <canvas id="board-canvas"></canvas>
+      </div>
+
+      <div id="typing" class="typing hidden"></div>
+
+      <footer class="composer">
+        <button id="file-btn" class="icon-btn" title="Attach file">📎</button>
+        <input id="file-input" type="file" hidden />
+        <textarea id="composer-input" placeholder="Tulis pesan... (Shift+Enter untuk newline)" rows="1"></textarea>
+        <button id="send-btn" class="primary">Kirim</button>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Modal: Create Room -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <h3>Buat Room Baru</h3>
+      <input id="modal-input" type="text" maxlength="32" placeholder="nama-room" />
+      <div class="modal-actions">
+        <button id="modal-cancel" class="ghost-btn">Batal</button>
+        <button id="modal-ok" class="primary">Buat</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/crypto.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

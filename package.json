@@ -1,0 +1,30 @@
+{
+  "name": "collabboard",
+  "version": "1.2.0",
+  "description": "CollabBoard — End-to-End Encrypted Multi-User Chat + Real-time Collaborative Whiteboard (TCP + Web)",
+  "main": "src/server/server.js",
+  "scripts": {
+    "server": "node src/server/server.js",
+    "client": "node src/client/cli-client.js",
+    "web": "node src/client/web-server.js",
+    "test": "node tests/run-all.js",
+    "test:unit": "node tests/run-all.js unit",
+    "test:integration": "node tests/run-all.js integration",
+    "test:e2e": "node tests/run-all.js e2e"
+  },
+  "keywords": [
+    "chat",
+    "encrypted",
+    "tcp",
+    "whiteboard",
+    "collaboration",
+    "aes-256-gcm",
+    "komunikasi-data"
+  ],
+  "author": "Komunikasi Data - Informatika 2026",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {}
+}
